@@ -1,3 +1,10 @@
+---
+name: feature
+about: 機能追加
+title: 'feature: '
+labels: enhancement
+---
+
 ## 概要
 <!--
 本issueの対応内容、起票のの背景、狙いを記載してください。

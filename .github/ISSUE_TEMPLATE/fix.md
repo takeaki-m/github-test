@@ -1,3 +1,10 @@
+---
+name: fix
+about: 機能修正
+title: 'fix: '
+labels: bug
+---
+
 ## 概要
 <!--
 本issueで修正する対象と修正の背景、狙いを記載してください。
