@@ -1,5 +1,5 @@
 ---
-name: 🐞 Bug
+name: Bug_markdown
 about: File a bug/issue
 title: '[BUG] <title>'
 labels: bug, enhancement

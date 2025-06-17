@@ -1,5 +1,5 @@
 ---
-name: feat
+name: Feat_markdown
 about: File a feat/issue
 title: '[feat] <title>'
 labels: enhancement

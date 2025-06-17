@@ -1,4 +1,4 @@
-name: Feat
+name: Feat_yml
 description: File a feat report.
 title: "[Feat]: "
 labels: ["enhancement"]
