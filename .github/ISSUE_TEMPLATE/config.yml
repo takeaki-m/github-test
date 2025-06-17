@@ -2,9 +2,9 @@ blank_issues_enabled: false
 
 # Issue作成時のテンプレート設定
 defaults:
-  - template: "feat.yml"
+  - template: "feat.md"
     name: "feat"
     about: "feat"
-  - template: "bug.yml"
+  - template: "bug.md"
     name: "bug"
     about: "bug"
