@@ -1,7 +1,7 @@
 ---
 name: feature
 about: 機能追加
-title: 'feature: <title>'
+title: 'feature: '
 labels: enhancement
 ---
 

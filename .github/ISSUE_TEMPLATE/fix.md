@@ -1,7 +1,7 @@
 ---
 name: fix
 about: 機能修正
-title: 'fix: <title>'
+title: 'fix: '
 labels: bug
 ---
 
