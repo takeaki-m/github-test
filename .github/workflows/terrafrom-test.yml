@@ -45,22 +45,27 @@ jobs:
           cat plan_result.txt | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" >> plan_result_no_color.txt;
           cat apply_result.txt | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" >> apply_result_no_color.txt;
 
-      - name: Create PR file
+      - name: Create PR terraform plan comment
         if: ${{ inputs.pull_request_number }} != null
         run: |
-          echo "## Terraform Plan Result" >> plan_result_for_pr.txt;
-            echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> plan_result_for_pr.txt;
-          echo "```tf" >> plan_result_for_pr.txt;
-          cat plan_result_no_color.txt >> plan_result_for_pr.txt;
-          echo "```" >> plan_result_for_pr.txt;
+          echo "## Terraform Plan Result" >> $GITHUB_OUTPUT
+          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT
+          echo "```tf" >> $GITHUB_OUTPUT
+          cat plan_result_no_color.txt >> $GITHUB_OUTPUT
+          echo "```" >> $GITHUB_OUTPUT
+          gh pr comment ${{ inputs.pull_request_number }} --body-file $GITHUB_OUTPUT
+          echo dev/null > $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          echo "## Terraform Apply Result" >> apply_result_for_pr.txt;
-          readlink -f apply_result_for_pr.txt;
-          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> apply_result_for_pr.txt;
+      - name: Create PR terraform apply comment
+        if: ${{ inputs.pull_request_number }} != null
+        run: |
+          echo "## Terraform Apply Result" >> $GITHUB_OUTPUT
+          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT
           echo "```tf" >> for_prsult_no_color.txt;
-          cat apply_result_no_color.txt >> apply_result_for_pr.txt;
-          echo "```" >> apply_result_for_pr.txt;
-          gh pr comment ${{ inputs.pull_request_number }} --body-file plan_result_for_pr.txt;
-          gh pr comment ${{ inputs.pull_request_number }} --body-file apply_result_for_pr.txt;
+          cat apply_result_no_color.txt >> $GITHUB_OUTPUT
+          echo "```" >> $GITHUB_OUTPUT
+          gh pr comment ${{ inputs.pull_request_number }} --body-file $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
