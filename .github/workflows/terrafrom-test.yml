@@ -42,13 +42,13 @@ jobs:
         if: ${{ inputs.pull_request_number }} != null
         run: |
           echo "## Terraform Plan Result" >> plan_result_no_color.txt
-          echo "${{ github.server_url }}/${{ github.repository }}/actins/runs/${{ github.run_id}}" >> plan_result_no_color.txt
+          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id}}" >> plan_result_no_color.txt
           echo "```tf" >> plan_result_no_color.txt
           cat plan_result.txt | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" >> plan_result_no_color.txt
           echo "```" >> plan_result_no_color.txt
 
           echo "## Terraform Apply Result" >> apply_result_no_color.txt
-          echo "${{ github.server_url }}/${{ github.repository }}/actins/runs/${{ github.run_id}}" >> apply_result_no_color.txt
+          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id}}" >> apply_result_no_color.txt
           echo "```tf" >> apply_result_no_color.txt
           cat apply_result.txt | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" >> apply_result_no_color.txt
           echo "```" >> apply_result_no_color.txt
