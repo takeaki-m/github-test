@@ -52,9 +52,9 @@ jobs:
           {
           echo "## Terraform Plan Result"
           echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          echo "```tf"
+          echo '```tf'
           cat plan_result_no_color.txt
-          echo "```"
+          echo '```'
           } > "$temp_pr_output_file"
           gh pr comment ${{ inputs.pull_request_number }} --body-file "$temp_pr_output_file"
           rm -f "$temp_pr_output_file"
@@ -68,9 +68,9 @@ jobs:
           {
           echo "## Terraform Apply Result"
           echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          echo "```tf"
+          echo '```tf'
           cat apply_result_no_color.txt
-          echo "```"
+          echo '```'
           } > "$temp_apply_output_file"
           gh pr comment ${{ inputs.pull_request_number }} --body-file "$temp_apply_output_file"
           rm -f "$temp_apply_output_file"
