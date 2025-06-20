@@ -48,24 +48,31 @@ jobs:
       - name: Create PR terraform plan comment
         if: ${{ inputs.pull_request_number }} != null
         run: |
-          echo "## Terraform Plan Result" >> $GITHUB_OUTPUT
-          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT
-          echo "```tf" >> $GITHUB_OUTPUT
-          cat plan_result_no_color.txt >> $GITHUB_OUTPUT
-          echo "```" >> $GITHUB_OUTPUT
-          gh pr comment ${{ inputs.pull_request_number }} --body-file $GITHUB_OUTPUT
-          echo dev/null > $GITHUB_OUTPUT
+          temp_pr_output_file=$(mktemp)
+          {
+          echo "## Terraform Plan Result"
+          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "```tf"
+          cat plan_result_no_color.txt
+          echo "```"
+          } > "$temp_pr_output_file"
+          gh pr comment ${{ inputs.pull_request_number }} --body-file "$temp_pr_output_file"
+          rm -f "$temp_pr_output_file"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create PR terraform apply comment
         if: ${{ inputs.pull_request_number }} != null
         run: |
-          echo "## Terraform Apply Result" >> $GITHUB_OUTPUT
-          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT
-          echo "```tf" >> for_prsult_no_color.txt;
-          cat apply_result_no_color.txt >> $GITHUB_OUTPUT
-          echo "```" >> $GITHUB_OUTPUT
-          gh pr comment ${{ inputs.pull_request_number }} --body-file $GITHUB_OUTPUT
+          temp_apply_output_file=$(mktemp)
+          {
+          echo "## Terraform Apply Result"
+          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "```tf"
+          cat apply_result_no_color.txt
+          echo "```"
+          } > "$temp_apply_output_file"
+          gh pr comment ${{ inputs.pull_request_number }} --body-file "$temp_apply_output_file"
+          rm -f "$temp_apply_output_file"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
