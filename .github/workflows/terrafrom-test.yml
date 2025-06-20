@@ -2,7 +2,7 @@ name: terraform-test
 
 defaults:
   run:
-    working-directory: /terraform
+    working-directory: terraform
 on:
   workflow_dispatch:
     inputs:
