@@ -32,11 +32,13 @@ jobs:
         run: |
           terraform init --reconfigure
       - name: Terraform plan
+        # pull requestに連携時に表示が崩れないように"-no-color" optionをつける
         run: |
-          terraform plan >> plan-result.txt
+          terraform plan -no-color | plan-result.txt
       - name: Terraform apply
+        # pull requestに連携時に表示が崩れないように"-no-color" optionをつける
         run: |
-          terraform apply -auto-approve >> apply-result.txt
+          terraform apply -no-color -auto-approve | tee apply-result.txt
       - name: Create PR comment
         if: ${{ inputs.pull_request_number }} != null
         run: |
