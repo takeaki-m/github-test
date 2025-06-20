@@ -34,7 +34,7 @@ jobs:
       - name: Terraform plan
         # pull requestに連携時に表示が崩れないように"-no-color" optionをつける
         run: |
-          terraform plan -no-color | tee plan-result.txt
+          terraform plan | tee plan-result.txt
       - name: Terraform apply
         # pull requestに連携時に表示が崩れないように"-no-color" optionをつける
         run: |
