@@ -40,23 +40,32 @@ jobs:
         run: |
           terraform apply -auto-approve | tee apply_result.txt
           readlink -f apply_result.txt
-      - name: Create PR comment
+
+
+
+      - name: Create terraform result with no-color
         if: ${{ inputs.pull_request_number }} != null
         run: |
-          echo "## Terraform Plan Result" >> plan_result_no_color.txt
-          readlink -f plan_result_no_color.txt
-          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> plan_result_no_color.txt
-          echo "```tf" >> plan_result_no_color.txt
-          cat plan_result.txt | sed -r 's/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g' >> plan_result_no_color.txt
-          echo "```" >> plan_result_no_color.txt
+          cat plan_result.txt | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" >> plan_result_no_color.txt
+          cat apply_result.txt | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" >> apply_result_no_color.txt
 
-          echo "## Terraform Apply Result" >> apply_result_no_color.txt
-          readlink -f apply_result_no_color.txt
-          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> apply_result_no_color.txt
-          echo "```tf" >> apply_result_no_color.txt
-          cat apply_result.txt | sed -r 's/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g' >> apply_result_no_color.txt
-          echo "```" >> apply_result_no_color.txt
-          gh pr comment ${{ inputs.pull_request_number }} --body-file plan_result_no_color.txt
-          gh pr comment ${{ inputs.pull_request_number }} --body-file apply_result_no_color.txt
+
+      - name: Create PR file
+        if: ${{ inputs.pull_request_number }} != null
+        run: |
+          echo "## Terraform Plan Result" >> plan_result_for_pr.txt
+          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> plan_result_for_pr.txt
+          echo "```tf" >> plan_result_for_pr.txt
+          cat plan_result_no_color.txt >> plan_result_for_pr.txt
+          echo "```" >> plan_result_for_pr.txt
+
+          echo "## Terraform Apply Result" >> apply_result_for_pr.txt
+          readlink -f apply_result_for_pr.txt
+          echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> apply_result_for_pr.txt
+          echo "```tf" >> for_prsult_no_color.txt
+          cat apply_result_no_color.txt >> apply_result_for_pr.txt
+          echo "```" >> apply_result_for_pr.txt
+          gh pr comment ${{ inputs.pull_request_number }} --body-file plan_result_for_pr.txt
+          gh pr comment ${{ inputs.pull_request_number }} --body-file apply_result_for_pr.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
