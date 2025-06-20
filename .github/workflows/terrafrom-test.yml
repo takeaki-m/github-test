@@ -4,7 +4,7 @@ defaults:
   run:
     working-directory: ./terraform
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       pull_request_number:
         required: false
