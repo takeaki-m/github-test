@@ -51,7 +51,7 @@ jobs:
           {
           echo "## Terraform Plan Result"
           echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          echo '```shell'
+          echo '```tf'
           cat plan_result_no_color.txt
           echo '```'
           } > "$temp_pr_output_file"
@@ -67,7 +67,7 @@ jobs:
           {
           echo "## Terraform Apply Result"
           echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          echo '```shell'
+          echo '```tf'
           cat apply_result_no_color.txt
           echo '```'
           } > "$temp_apply_output_file"
