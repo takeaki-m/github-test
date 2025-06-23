@@ -35,7 +35,6 @@ jobs:
         run: |
           terraform plan | tee plan_result.txt
       - name: Terraform apply
-        # pull requestに連携時に表示が崩れないように"-no-color" optionをつける
         run: |
           terraform apply -auto-approve | tee apply_result.txt
 
@@ -52,7 +51,7 @@ jobs:
           {
           echo "## Terraform Plan Result"
           echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          echo '```tf'
+          echo '```shell'
           cat plan_result_no_color.txt
           echo '```'
           } > "$temp_pr_output_file"
@@ -68,7 +67,7 @@ jobs:
           {
           echo "## Terraform Apply Result"
           echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          echo '```tf'
+          echo '```shell'
           cat apply_result_no_color.txt
           echo '```'
           } > "$temp_apply_output_file"
